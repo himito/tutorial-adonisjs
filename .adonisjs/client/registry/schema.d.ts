@@ -44,7 +44,7 @@ export interface Registry {
     }
   }
   'todos.update': {
-    methods: ["PUT"]
+    methods: ["PUT","PATCH"]
     pattern: '/todos/:id'
     types: {
       body: {}

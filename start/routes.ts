@@ -17,11 +17,14 @@ router.get('/', () => {
 })
 
 // Todos routes
-router.get('/todos', [TodosController, 'index']).as('todos.index')
-router.post('/todos', [TodosController, 'store']).as('todos.store')
-router.get('/todos/:id', [TodosController, 'show']).as('todos.show')
-router.put('/todos/:id', [TodosController, 'update']).as('todos.update')
-router.delete('/todos/:id', [TodosController, 'destroy']).as('todos.destroy')
+// router.get('/todos', [TodosController, 'index']).as('todos.index')
+// router.post('/todos', [TodosController, 'store']).as('todos.store')
+// router.get('/todos/:id', [TodosController, 'show']).as('todos.show')
+// router.put('/todos/:id', [TodosController, 'update']).as('todos.update')
+// router.delete('/todos/:id', [TodosController, 'destroy']).as('todos.destroy')
+
+// Using resourceful routes
+router.resource('todos', TodosController).apiOnly().as('todos')
 
 router
   .group(() => {

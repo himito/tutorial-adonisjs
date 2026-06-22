@@ -33,6 +33,9 @@ export type ScannedRoutes = {
   PUT: {
     'todos.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
   }
+  PATCH: {
+    'todos.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+  }
   DELETE: {
     'todos.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
   }
