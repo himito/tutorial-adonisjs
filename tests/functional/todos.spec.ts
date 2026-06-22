@@ -41,4 +41,10 @@ test.group('Todos', (group) => {
     const res = await client.delete(`/todos/${todo.id}`)
     res.assertNoContent()
   })
+
+  test('rejects a too-short title', async ({ client }) => {
+    const res = await client.post('/todos').json({ title: 'Hi' })
+
+    res.assertUnprocessableEntity()
+  })
 })
