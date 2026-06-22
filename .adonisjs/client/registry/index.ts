@@ -12,6 +12,30 @@ const routes = {
     tokens: [{"old":"/todos","type":0,"val":"todos","end":""}],
     types: placeholder as Registry['todos.index']['types'],
   },
+  'todos.store': {
+    methods: ["POST"],
+    pattern: '/todos',
+    tokens: [{"old":"/todos","type":0,"val":"todos","end":""}],
+    types: placeholder as Registry['todos.store']['types'],
+  },
+  'todos.show': {
+    methods: ["GET","HEAD"],
+    pattern: '/todos/:id',
+    tokens: [{"old":"/todos/:id","type":0,"val":"todos","end":""},{"old":"/todos/:id","type":1,"val":"id","end":""}],
+    types: placeholder as Registry['todos.show']['types'],
+  },
+  'todos.update': {
+    methods: ["PUT"],
+    pattern: '/todos/:id',
+    tokens: [{"old":"/todos/:id","type":0,"val":"todos","end":""},{"old":"/todos/:id","type":1,"val":"id","end":""}],
+    types: placeholder as Registry['todos.update']['types'],
+  },
+  'todos.destroy': {
+    methods: ["DELETE"],
+    pattern: '/todos/:id',
+    tokens: [{"old":"/todos/:id","type":0,"val":"todos","end":""},{"old":"/todos/:id","type":1,"val":"id","end":""}],
+    types: placeholder as Registry['todos.destroy']['types'],
+  },
   'auth.new_account.store': {
     methods: ["POST"],
     pattern: '/api/v1/auth/signup',

@@ -2,11 +2,24 @@ import Todo from '#models/todo'
 import type { HttpContext } from '@adonisjs/core/http'
 
 export default class TodosController {
-  /**
-   * Display a list of todos
-   */
   async index({ response }: HttpContext) {
-    const todos = await Todo.all()
-    return response.ok(todos)
+    return response.ok(await Todo.all())
+  }
+  async store({ request, response }: HttpContext) {
+    const data = request.only(['title', 'completed'])
+    return response.created(await Todo.create(data))
+  }
+  async show({ params, response }: HttpContext) {
+    return response.ok(await Todo.findOrFail(params.id))
+  }
+  async update({ params, request, response }: HttpContext) {
+    const todo = await Todo.findOrFail(params.id)
+    todo.merge(request.only(['title', 'completed']))
+    return response.ok(await todo.save())
+  }
+  async destroy({ params, response }: HttpContext) {
+    const todo = await Todo.findOrFail(params.id)
+    await todo.delete()
+    return response.noContent()
   }
 }

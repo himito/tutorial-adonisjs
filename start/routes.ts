@@ -16,7 +16,12 @@ router.get('/', () => {
   return { hello: 'world' }
 })
 
+// Todos routes
 router.get('/todos', [TodosController, 'index'])
+router.post('/todos', [TodosController, 'store'])
+router.get('/todos/:id', [TodosController, 'show'])
+router.put('/todos/:id', [TodosController, 'update'])
+router.delete('/todos/:id', [TodosController, 'destroy'])
 
 router
   .group(() => {
