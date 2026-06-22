@@ -1,4 +1,5 @@
 import Todo from '#models/todo'
+import { createTodoValidator } from '#validators/todo'
 import type { HttpContext } from '@adonisjs/core/http'
 
 export default class TodosController {
@@ -6,7 +7,7 @@ export default class TodosController {
     return response.ok(await Todo.all())
   }
   async store({ request, response }: HttpContext) {
-    const data = request.only(['title', 'completed'])
+    const data = await request.validateUsing(createTodoValidator)
     return response.created(await Todo.create(data))
   }
   async show({ params, response }: HttpContext) {
