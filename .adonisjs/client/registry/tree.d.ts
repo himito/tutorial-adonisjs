@@ -2,6 +2,9 @@
 import type { routes } from './index.ts'
 
 export interface ApiDefinition {
+  todos: {
+    index: typeof routes['todos.index']
+  }
   auth: {
     newAccount: {
       store: typeof routes['auth.new_account.store']

@@ -7,13 +7,16 @@
 |
 */
 
+const TodosController = () => import('#controllers/todos_controller')
+import { controllers } from '#generated/controllers'
 import { middleware } from '#start/kernel'
 import router from '@adonisjs/core/services/router'
-import { controllers } from '#generated/controllers'
 
 router.get('/', () => {
   return { hello: 'world' }
 })
+
+router.get('/todos', [TodosController, 'index'])
 
 router
   .group(() => {
