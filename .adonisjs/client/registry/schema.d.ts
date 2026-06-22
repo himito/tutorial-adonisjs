@@ -23,12 +23,12 @@ export interface Registry {
     methods: ["POST"]
     pattern: '/todos'
     types: {
-      body: {}
+      body: ExtractBody<InferInput<(typeof import('#validators/todo').createTodoValidator)>>
       paramsTuple: []
       params: {}
-      query: {}
+      query: ExtractQuery<InferInput<(typeof import('#validators/todo').createTodoValidator)>>
       response: ExtractResponse<Awaited<ReturnType<import('#controllers/todos_controller').default['store']>>>
-      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/todos_controller').default['store']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/todos_controller').default['store']>>> | { status: 422; response: { errors: SimpleError[] } }
     }
   }
   'todos.show': {
