@@ -47,4 +47,10 @@ test.group('Todos', (group) => {
 
     res.assertUnprocessableEntity()
   })
+
+  test('rejects anonymous', async ({ client }) => {
+    const res = await client.get('/todos')
+
+    res.assertUnauthorized()
+  }).pin()
 })

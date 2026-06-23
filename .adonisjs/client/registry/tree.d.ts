@@ -2,23 +2,19 @@
 import type { routes } from './index.ts'
 
 export interface ApiDefinition {
+  auth: {
+    register: typeof routes['auth.register']
+    login: typeof routes['auth.login']
+    logout: typeof routes['auth.logout']
+  }
+  profile: {
+    show: typeof routes['profile.show']
+  }
   todos: {
     index: typeof routes['todos.index']
     store: typeof routes['todos.store']
     show: typeof routes['todos.show']
     update: typeof routes['todos.update']
     destroy: typeof routes['todos.destroy']
-  }
-  auth: {
-    register: typeof routes['auth.register']
-    login: typeof routes['auth.login']
-  }
-  profile: {
-    profile: {
-      show: typeof routes['profile.profile.show']
-    }
-    auth: {
-      logout: typeof routes['profile.auth.logout']
-    }
   }
 }

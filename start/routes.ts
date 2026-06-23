@@ -24,22 +24,16 @@ router.get('/', () => {
 // router.put('/todos/:id', [TodosController, 'update']).as('todos.update')
 // router.delete('/todos/:id', [TodosController, 'destroy']).as('todos.destroy')
 
-// Using resourceful routes
-router.resource('todos', TodosController).apiOnly().as('todos')
-
 // Auth routes
 router.post('register', [AuthController, 'register'])
 router.post('login', [AuthController, 'login'])
 
 router
   .group(() => {
-    router
-      .group(() => {
-        router.get('profile', [ProfileController, 'show'])
-        router.post('logout', [AuthController, 'logout'])
-      })
-      .prefix('account')
-      .as('profile')
-      .use(middleware.auth())
+    router.get('profile', [ProfileController, 'show'])
+    router.post('logout', [AuthController, 'logout'])
+
+    // Using resourceful routes
+    router.resource('todos', TodosController).apiOnly().as('todos')
   })
-  .prefix('/api/v1')
+  .use(middleware.auth())

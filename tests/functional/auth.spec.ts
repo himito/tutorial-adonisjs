@@ -39,5 +39,5 @@ test.group('Authentication', (group) => {
     const body = response.body()
     assert.exists(body.token)
     assert.isNotEmpty(body.token)
-  }).pin()
+  })
 })
