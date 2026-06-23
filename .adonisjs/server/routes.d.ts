@@ -9,10 +9,10 @@ export type ScannedRoutes = {
     'todos.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'todos.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'todos.destroy': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
-    'auth.new_account.store': { paramsTuple?: []; params?: {} }
-    'auth.access_tokens.store': { paramsTuple?: []; params?: {} }
+    'auth.register': { paramsTuple?: []; params?: {} }
+    'auth.login': { paramsTuple?: []; params?: {} }
     'profile.profile.show': { paramsTuple?: []; params?: {} }
-    'profile.access_tokens.destroy': { paramsTuple?: []; params?: {} }
+    'profile.auth.logout': { paramsTuple?: []; params?: {} }
   }
   GET: {
     'todos.index': { paramsTuple?: []; params?: {} }
@@ -26,9 +26,9 @@ export type ScannedRoutes = {
   }
   POST: {
     'todos.store': { paramsTuple?: []; params?: {} }
-    'auth.new_account.store': { paramsTuple?: []; params?: {} }
-    'auth.access_tokens.store': { paramsTuple?: []; params?: {} }
-    'profile.access_tokens.destroy': { paramsTuple?: []; params?: {} }
+    'auth.register': { paramsTuple?: []; params?: {} }
+    'auth.login': { paramsTuple?: []; params?: {} }
+    'profile.auth.logout': { paramsTuple?: []; params?: {} }
   }
   PUT: {
     'todos.update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }

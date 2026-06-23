@@ -8,7 +8,8 @@
 */
 
 const TodosController = () => import('#controllers/todos_controller')
-import { controllers } from '#generated/controllers'
+const AuthController = () => import('#controllers/auth_controller')
+const ProfileController = () => import('#controllers/profile_controller')
 import { middleware } from '#start/kernel'
 import router from '@adonisjs/core/services/router'
 
@@ -26,20 +27,16 @@ router.get('/', () => {
 // Using resourceful routes
 router.resource('todos', TodosController).apiOnly().as('todos')
 
+// Auth routes
+router.post('register', [AuthController, 'register'])
+router.post('login', [AuthController, 'login'])
+
 router
   .group(() => {
     router
       .group(() => {
-        router.post('signup', [controllers.NewAccount, 'store'])
-        router.post('login', [controllers.AccessTokens, 'store'])
-      })
-      .prefix('auth')
-      .as('auth')
-
-    router
-      .group(() => {
-        router.get('profile', [controllers.Profile, 'show'])
-        router.post('logout', [controllers.AccessTokens, 'destroy'])
+        router.get('profile', [ProfileController, 'show'])
+        router.post('logout', [AuthController, 'logout'])
       })
       .prefix('account')
       .as('profile')
