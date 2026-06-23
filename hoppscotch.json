@@ -1,0 +1,424 @@
+{
+  "v": 12,
+  "name": "Todo API",
+  "folders": [
+    {
+      "v": 12,
+      "name": "Health",
+      "folders": [],
+      "requests": [
+        {
+          "v": "17",
+          "name": "Health Check",
+          "method": "GET",
+          "endpoint": "<<baseUrl>>/",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "pw.test(\"returns 200\", () => {\n  pw.expect(pw.response.status).toBe(200);\n});",
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {},
+          "_ref_id": "req_health_check",
+          "description": "Checks that the API server is reachable."
+        }
+      ],
+      "auth": {
+        "authType": "none",
+        "authActive": true
+      },
+      "headers": [],
+      "variables": [],
+      "description": null,
+      "preRequestScript": "",
+      "testScript": "",
+      "_ref_id": "coll_health"
+    },
+    {
+      "v": 12,
+      "name": "Authentication",
+      "folders": [],
+      "requests": [
+        {
+          "v": "17",
+          "name": "Register",
+          "method": "POST",
+          "endpoint": "<<baseUrl>>/register",
+          "params": [],
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "pw.test(\"creates a user\", () => {\n  pw.expect(pw.response.status).toBe(201);\n});\n\nconst body = pw.response.body;\nif (body && body.token) {\n  pw.env.set(\"token\", body.token);\n}",
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"fullName\": \"<<fullName>>\",\n  \"email\": \"<<email>>\",\n  \"password\": \"<<password>>\",\n  \"passwordConfirmation\": \"<<password>>\"\n}"
+          },
+          "requestVariables": [],
+          "responses": {},
+          "_ref_id": "req_register",
+          "description": "Creates an account and stores the returned access token in the token variable."
+        },
+        {
+          "v": "17",
+          "name": "Login",
+          "method": "POST",
+          "endpoint": "<<baseUrl>>/login",
+          "params": [],
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json",
+              "active": true,
+              "description": ""
+            }
+          ],
+          "preRequestScript": "",
+          "testScript": "pw.test(\"returns a token\", () => {\n  pw.expect(pw.response.status).toBe(200);\n});\n\nconst body = pw.response.body;\nif (body && body.token) {\n  pw.env.set(\"token\", body.token);\n}",
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"email\": \"<<email>>\",\n  \"password\": \"<<password>>\"\n}"
+          },
+          "requestVariables": [],
+          "responses": {},
+          "_ref_id": "req_login",
+          "description": "Logs in and stores the returned access token in the token variable."
+        }
+      ],
+      "auth": {
+        "authType": "none",
+        "authActive": true
+      },
+      "headers": [],
+      "variables": [],
+      "description": null,
+      "preRequestScript": "",
+      "testScript": "",
+      "_ref_id": "coll_authentication"
+    },
+    {
+      "v": 12,
+      "name": "Authenticated",
+      "folders": [
+        {
+          "v": 12,
+          "name": "Profile and Session",
+          "folders": [],
+          "requests": [
+            {
+              "v": "17",
+              "name": "Get Profile",
+              "method": "GET",
+              "endpoint": "<<baseUrl>>/profile",
+              "params": [],
+              "headers": [],
+              "preRequestScript": "",
+              "testScript": "pw.test(\"returns the current profile\", () => {\n  pw.expect(pw.response.status).toBe(200);\n});",
+              "auth": {
+                "authType": "inherit",
+                "authActive": true
+              },
+              "body": {
+                "contentType": null,
+                "body": null
+              },
+              "requestVariables": [],
+              "responses": {},
+              "_ref_id": "req_get_profile",
+              "description": "Returns the authenticated user's profile."
+            },
+            {
+              "v": "17",
+              "name": "Logout",
+              "method": "POST",
+              "endpoint": "<<baseUrl>>/logout",
+              "params": [],
+              "headers": [],
+              "preRequestScript": "",
+              "testScript": "pw.test(\"logs out\", () => {\n  pw.expect(pw.response.status).toBe(200);\n});",
+              "auth": {
+                "authType": "inherit",
+                "authActive": true
+              },
+              "body": {
+                "contentType": null,
+                "body": null
+              },
+              "requestVariables": [],
+              "responses": {},
+              "_ref_id": "req_logout",
+              "description": "Revokes the current bearer token."
+            }
+          ],
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "headers": [],
+          "variables": [],
+          "description": null,
+          "preRequestScript": "",
+          "testScript": "",
+          "_ref_id": "coll_profile_session"
+        },
+        {
+          "v": 12,
+          "name": "Todos",
+          "folders": [],
+          "requests": [
+            {
+              "v": "17",
+              "name": "List Todos",
+              "method": "GET",
+              "endpoint": "<<baseUrl>>/todos",
+              "params": [],
+              "headers": [],
+              "preRequestScript": "",
+              "testScript": "pw.test(\"returns todos\", () => {\n  pw.expect(pw.response.status).toBe(200);\n});",
+              "auth": {
+                "authType": "inherit",
+                "authActive": true
+              },
+              "body": {
+                "contentType": null,
+                "body": null
+              },
+              "requestVariables": [],
+              "responses": {},
+              "_ref_id": "req_list_todos",
+              "description": "Lists todos."
+            },
+            {
+              "v": "17",
+              "name": "Create Todo",
+              "method": "POST",
+              "endpoint": "<<baseUrl>>/todos",
+              "params": [],
+              "headers": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "active": true,
+                  "description": ""
+                }
+              ],
+              "preRequestScript": "",
+              "testScript": "pw.test(\"creates a todo\", () => {\n  pw.expect(pw.response.status).toBe(201);\n});\n\nconst body = pw.response.body;\nif (body && body.id) {\n  pw.env.set(\"todoId\", String(body.id));\n}",
+              "auth": {
+                "authType": "inherit",
+                "authActive": true
+              },
+              "body": {
+                "contentType": "application/json",
+                "body": "{\n  \"title\": \"Buy groceries\",\n  \"completed\": false\n}"
+              },
+              "requestVariables": [],
+              "responses": {},
+              "_ref_id": "req_create_todo",
+              "description": "Creates a todo and stores its id in the todoId variable."
+            },
+            {
+              "v": "17",
+              "name": "Get Todo",
+              "method": "GET",
+              "endpoint": "<<baseUrl>>/todos/<<todoId>>",
+              "params": [],
+              "headers": [],
+              "preRequestScript": "",
+              "testScript": "pw.test(\"returns a todo\", () => {\n  pw.expect(pw.response.status).toBe(200);\n});",
+              "auth": {
+                "authType": "inherit",
+                "authActive": true
+              },
+              "body": {
+                "contentType": null,
+                "body": null
+              },
+              "requestVariables": [],
+              "responses": {},
+              "_ref_id": "req_get_todo",
+              "description": "Fetches a todo by id."
+            },
+            {
+              "v": "17",
+              "name": "Update Todo",
+              "method": "PUT",
+              "endpoint": "<<baseUrl>>/todos/<<todoId>>",
+              "params": [],
+              "headers": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "active": true,
+                  "description": ""
+                }
+              ],
+              "preRequestScript": "",
+              "testScript": "pw.test(\"updates a todo\", () => {\n  pw.expect(pw.response.status).toBe(200);\n});",
+              "auth": {
+                "authType": "inherit",
+                "authActive": true
+              },
+              "body": {
+                "contentType": "application/json",
+                "body": "{\n  \"title\": \"Buy groceries and snacks\",\n  \"completed\": true\n}"
+              },
+              "requestVariables": [],
+              "responses": {},
+              "_ref_id": "req_update_todo",
+              "description": "Updates a todo by id."
+            },
+            {
+              "v": "17",
+              "name": "Delete Todo",
+              "method": "DELETE",
+              "endpoint": "<<baseUrl>>/todos/<<todoId>>",
+              "params": [],
+              "headers": [],
+              "preRequestScript": "",
+              "testScript": "pw.test(\"deletes a todo owned by the current user\", () => {\n  pw.expect(pw.response.status).toBe(204);\n});",
+              "auth": {
+                "authType": "inherit",
+                "authActive": true
+              },
+              "body": {
+                "contentType": null,
+                "body": null
+              },
+              "requestVariables": [],
+              "responses": {},
+              "_ref_id": "req_delete_todo",
+              "description": "Deletes a todo by id when the current user owns it."
+            },
+            {
+              "v": "17",
+              "name": "Validation Error: Short Title",
+              "method": "POST",
+              "endpoint": "<<baseUrl>>/todos",
+              "params": [],
+              "headers": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json",
+                  "active": true,
+                  "description": ""
+                }
+              ],
+              "preRequestScript": "",
+              "testScript": "pw.test(\"rejects invalid title\", () => {\n  pw.expect(pw.response.status).toBe(422);\n});",
+              "auth": {
+                "authType": "inherit",
+                "authActive": true
+              },
+              "body": {
+                "contentType": "application/json",
+                "body": "{\n  \"title\": \"Hi\"\n}"
+              },
+              "requestVariables": [],
+              "responses": {},
+              "_ref_id": "req_todo_short_title",
+              "description": "Exercises the title length validation rule."
+            }
+          ],
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "headers": [],
+          "variables": [],
+          "description": null,
+          "preRequestScript": "",
+          "testScript": "",
+          "_ref_id": "coll_todos"
+        }
+      ],
+      "requests": [],
+      "auth": {
+        "authType": "bearer",
+        "authActive": true,
+        "token": "<<token>>"
+      },
+      "headers": [],
+      "variables": [],
+      "description": null,
+      "preRequestScript": "",
+      "testScript": "",
+      "_ref_id": "coll_authenticated"
+    }
+  ],
+  "requests": [],
+  "auth": {
+    "authType": "none",
+    "authActive": true
+  },
+  "headers": [
+    {
+      "key": "Accept",
+      "value": "application/json",
+      "active": true,
+      "description": ""
+    }
+  ],
+  "variables": [
+    {
+      "key": "baseUrl",
+      "initialValue": "http://localhost:3333",
+      "currentValue": "http://localhost:3333",
+      "secret": false
+    },
+    {
+      "key": "fullName",
+      "initialValue": "John Doe",
+      "currentValue": "John Doe",
+      "secret": false
+    },
+    {
+      "key": "email",
+      "initialValue": "john.doe@example.com",
+      "currentValue": "john.doe@example.com",
+      "secret": false
+    },
+    {
+      "key": "password",
+      "initialValue": "password123",
+      "currentValue": "password123",
+      "secret": true
+    },
+    {
+      "key": "token",
+      "initialValue": "",
+      "currentValue": "",
+      "secret": true
+    },
+    {
+      "key": "todoId",
+      "initialValue": "1",
+      "currentValue": "1",
+      "secret": false
+    }
+  ],
+  "description": "Hoppscotch collection for the AdonisJS Todo API. Run Register or Login first, then use the authenticated requests.",
+  "preRequestScript": "",
+  "testScript": "",
+  "_ref_id": "coll_todo_api"
+}
