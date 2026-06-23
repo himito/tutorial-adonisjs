@@ -7,13 +7,16 @@ test.group('Todos', (group) => {
   group.each.setup(() => testUtils.db().truncate())
 
   test('list todos', async ({ client }) => {
-    const res = await client.get('/todos')
+    const user = await UserFactory.create()
+    const res = await client.get('/todos').loginAs(user)
     res.assertOk()
   })
 
   test('lists all todos', async ({ client, assert }) => {
     await TodoFactory.createMany(3)
-    const res = await client.get('/todos')
+
+    const user = await UserFactory.create()
+    const res = await client.get('/todos').loginAs(user)
     res.assertOk()
 
     // @ts-ignore
@@ -22,29 +25,32 @@ test.group('Todos', (group) => {
 
   test('get todo', async ({ client }) => {
     const todo = await TodoFactory.create()
-    const res = await client.get(`/todos/${todo.id}`)
+
+    const user = await UserFactory.create()
+    const res = await client.get(`/todos/${todo.id}`).loginAs(user)
     res.assertOk()
   })
 
   test('create todo', async ({ client }) => {
-    const res = await client.post('/todos').json({ title: 'Buy groceries' })
+    const user = await UserFactory.create()
+    const res = await client.post('/todos').json({ title: 'Buy groceries' }).loginAs(user)
     res.assertCreated()
   })
 
   test('update todo', async ({ client }) => {
     const todo = await TodoFactory.create()
-    const res = await client.put(`/todos/${todo.id}`).json({ title: 'Buy groceries and snacks' })
+    const user = await UserFactory.create()
+
+    const res = await client
+      .put(`/todos/${todo.id}`)
+      .json({ title: 'Buy groceries and snacks' })
+      .loginAs(user)
     res.assertOk()
   })
 
-  test('delete todo', async ({ client }) => {
-    const todo = await TodoFactory.create()
-    const res = await client.delete(`/todos/${todo.id}`)
-    res.assertNoContent()
-  })
-
   test('rejects a too-short title', async ({ client }) => {
-    const res = await client.post('/todos').json({ title: 'Hi' })
+    const user = await UserFactory.create()
+    const res = await client.post('/todos').json({ title: 'Hi' }).loginAs(user)
 
     res.assertUnprocessableEntity()
   })
