@@ -33,7 +33,7 @@ export class AuthAccessTokenSchema extends BaseModel {
 }
 
 export class TodoSchema extends BaseModel {
-  static $columns = ['completed', 'createdAt', 'id', 'title', 'updatedAt', 'usersId'] as const
+  static $columns = ['completed', 'createdAt', 'id', 'title', 'updatedAt', 'userId'] as const
   $columns = TodoSchema.$columns
   @column()
   declare completed: boolean | null
@@ -46,7 +46,7 @@ export class TodoSchema extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime | null
   @column()
-  declare usersId: number | null
+  declare userId: number | null
 }
 
 export class UserSchema extends BaseModel {

@@ -1,4 +1,5 @@
 import { TodoFactory } from '#database/factories/todo_factory'
+import { UserFactory } from '#database/factories/user_factory'
 import testUtils from '@adonisjs/core/services/test_utils'
 import { test } from '@japa/runner'
 
@@ -52,5 +53,23 @@ test.group('Todos', (group) => {
     const res = await client.get('/todos')
 
     res.assertUnauthorized()
-  }).pin()
+  })
+
+  test('owner-only delete', async ({ client }) => {
+    const owner = await UserFactory.create()
+    const todo = await TodoFactory.merge({ userId: owner.id }).create()
+
+    const res = await client.delete(`/todos/${todo.id}`).loginAs(owner)
+
+    res.assertNoContent()
+  })
+
+  test('owner-only delete (intruder)', async ({ client }) => {
+    const intruder = await UserFactory.create()
+    const todo = await TodoFactory.create()
+
+    const res = await client.delete(`/todos/${todo.id}`).loginAs(intruder)
+
+    res.assertForbidden()
+  })
 })

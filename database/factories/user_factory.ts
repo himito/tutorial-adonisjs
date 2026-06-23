@@ -1,5 +1,6 @@
 import User from '#models/user'
 import factory from '@adonisjs/lucid/factories'
+import { TodoFactory } from './todo_factory.ts'
 
 export const UserFactory = factory
   .define(User, async ({ faker }) => {
@@ -9,4 +10,5 @@ export const UserFactory = factory
       password: faker.internet.password(),
     }
   })
+  .relation('todos', () => TodoFactory)
   .build()
